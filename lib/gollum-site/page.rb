@@ -3,7 +3,7 @@ module Gollum
     # Add ".html" extension to page links
     def self.cname(name)
       cname = name.respond_to?(:gsub)      ?
-      name.gsub(%r{[ /<>]}, '-') :
+      name.gsub(%r{[ <>]}, '-') :
         ''
 
       # account for anchor links (e.g. Page#anchor)
