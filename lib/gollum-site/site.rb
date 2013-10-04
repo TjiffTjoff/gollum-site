@@ -164,6 +164,11 @@ module Gollum
       Dir.chdir(cwd)
       result
     end
+
+    #Lookup if page exists in hash
+    def find_pages(name)
+      @pages.has_key?(name)
+    end
   end # Site
 
 end # Gollum

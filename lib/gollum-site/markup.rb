@@ -22,12 +22,11 @@ module Gollum
       else
         presence    = "absent"
         link_name   = cname
-        page = find_page_from_name(cname)
-        if page
-          # Update link_name to account for case sensitivity
-          link_name = @wiki.page_class.cname(page.name)
+        if @wiki.site.find_page(cname)
+          SiteLog.debug("Marking link #{cname} as present")
           presence  = "present"
         end
+          SiteLog.debug("Marking link #{cname} as absent")
         link = ::File.join(@wiki.base_path, CGI.escape(link_name))
         %{<a class="internal #{presence}" href="#{link}#{extra}">#{name}</a>}
       end
@@ -37,18 +36,5 @@ module Gollum
       tag
     end
 
-    # Find a page from a given cname.  If the page has an anchor (#) and has
-    # no match, strip the anchor and try again.
-    #
-    # cname - The String canonical page name.
-    #
-    # Returns a Gollum::Page instance if a page is found, or an Array of
-    # [Gollum::Page, String extra] if a page without the extra anchor data
-    # is found.
-    def find_page_from_name(cname)
-      if page = @wiki.page(cname, @version)
-        return page
-      end
-    end
   end
 end
