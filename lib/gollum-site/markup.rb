@@ -22,7 +22,7 @@ module Gollum
       else
         presence    = "absent"
         link_name   = cname
-        if @wiki.site.find_page(cname)
+        if @wiki.site.find_page(cname.gsub(/\.html/, ""))
           SiteLog.debug("Marking link #{cname} as present")
           presence  = "present"
         end
