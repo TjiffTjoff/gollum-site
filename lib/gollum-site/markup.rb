@@ -26,7 +26,6 @@ module Gollum
           SiteLog.debug("Marking link #{cname} as present")
           presence  = "present"
         end
-          SiteLog.debug("Marking link #{cname} as absent")
         link = ::File.join(@wiki.base_path, CGI.escape(link_name))
         %{<a class="internal #{presence}" href="#{link}#{extra}">#{name}</a>}
       end
