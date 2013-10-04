@@ -46,10 +46,19 @@ module Gollum
           page.version = @commit
 
           if @preserve_tree
-            key = [::File.dirname(item.path).gsub(/^\./, "").gsub(/\//, ' '), page.name].join(" ").strip.downcase
+            #key = [::File.dirname(item.path).gsub(/^\./, "").gsub(/\//, ' '), page.name].join(" ").strip.downcase
+            ext = ::File.extname(item.path)
+            base = ::File.basename(item.path, "#{ext}")
+            dir = ::File.dirname(item.path).gsub(/^\.\/?/, "")
+            if dir == ""
+              key = base
+            else
+              key = [dir, base].join('/')
+            end
           else
             key = page.name.downcase
           end
+          SiteLog.debug("Key/name is #{key}")
           @pages[key] = page
         else
           # file
